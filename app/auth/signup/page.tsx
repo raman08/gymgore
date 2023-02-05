@@ -1,6 +1,9 @@
 "use client";
 
+import axios from "axios";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { AiFillApple, AiFillGoogleCircle } from "react-icons/ai";
 import { RiFacebookCircleFill } from "react-icons/ri";
@@ -11,15 +14,26 @@ export default function SignUp() {
 	const [password, setPassword] = useState("");
 	const [userId, setUserId] = useState("");
 
-	// const navigation =
-	function handleSubmit(e: FormEvent) {
+	const router = useRouter();
+
+	async function handleSubmit(e: FormEvent) {
 		e.preventDefault();
 		console.log({ name, email, password, userId });
 
-		setName("");
-		setEmail("");
-		setPassword("");
-		setUserId("");
+		try {
+			const data = await axios.post("/api/auth/register", {
+				name,
+				email,
+				password,
+				userId,
+			});
+
+			console.log(data);
+
+			router.push("/auth/login");
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	return (
@@ -86,26 +100,50 @@ export default function SignUp() {
 					Register Now
 				</button>
 
-				<div className="flex items-center gap-2 self-center">
-					<div className="h-0.5 w-36 bg-purple-100"></div>
-					<span className="text-md italic">or</span>
-					<div className="h-0.5 w-36 bg-purple-100"></div>
-				</div>
+				{/* <div className="flex items-center gap-2 self-center"> */}
+				{/* 	<div className="h-0.5 w-36 bg-purple-100"></div> */}
+				{/* 	<span className="text-md italic">or</span> */}
+				{/* 	<div className="h-0.5 w-36 bg-purple-100"></div> */}
+				{/* </div> */}
 
-				<div className="flex flex-col items-center justify-center gap-5">
-					<button className="flex items-center gap-3 self-center">
-						<AiFillGoogleCircle size={20} />
-						<span>Signup with google</span>
-					</button>
-					<button className="flex items-center gap-3 self-center">
-						<RiFacebookCircleFill size={20} />
-						<span>Signup with facebook</span>
-					</button>
-					<button className="flex items-center gap-3 self-center">
-						<AiFillApple size={20} />
-						<span>Signup with apple</span>
-					</button>
-				</div>
+				{/* <div className="flex flex-col items-center justify-center gap-5"> */}
+				{/* 	<button */}
+				{/* 		onClick={() => */}
+				{/* 			signIn("google", { */}
+				{/* 				redirect: true, */}
+				{/* 				callbackUrl: "/", */}
+				{/* 			}) */}
+				{/* 		} */}
+				{/* 		className="flex items-center gap-3 self-center" */}
+				{/* 	> */}
+				{/* 		<AiFillGoogleCircle size={20} /> */}
+				{/* 		<span>Signup with google</span> */}
+				{/* 	</button> */}
+				{/* 	<button */}
+				{/* 		onClick={() => */}
+				{/* 			signIn("facebook", { */}
+				{/* 				redirect: true, */}
+				{/* 				callbackUrl: "/", */}
+				{/* 			}) */}
+				{/* 		} */}
+				{/* 		className="flex items-center gap-3 self-center" */}
+				{/* 	> */}
+				{/* 		<RiFacebookCircleFill size={20} /> */}
+				{/* 		<span>Signup with facebook</span> */}
+				{/* 	</button> */}
+				{/* 	<button */}
+				{/* 		onClick={() => */}
+				{/* 			signIn("apple", { */}
+				{/* 				redirect: true, */}
+				{/* 				callbackUrl: "/", */}
+				{/* 			}) */}
+				{/* 		} */}
+				{/* 		className="flex items-center gap-3 self-center" */}
+				{/* 	> */}
+				{/* 		<AiFillApple size={20} /> */}
+				{/* 		<span>Signup with apple</span> */}
+				{/* 	</button> */}
+				{/* </div> */}
 
 				<div className="text-center">
 					<p className="text-orange-400">Already Have an account?</p>

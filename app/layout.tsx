@@ -1,3 +1,5 @@
+"use client";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,11 +10,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head />
-			<body className="h-screen">
-				<div className="flex h-full items-center justify-center">
-					{children}
-				</div>
-			</body>
+			<SessionProvider>
+				<body className="h-screen">
+					<div className="flex h-full items-center justify-center">
+						{children}
+					</div>
+				</body>
+			</SessionProvider>
 		</html>
 	);
 }

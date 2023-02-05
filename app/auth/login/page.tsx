@@ -2,16 +2,34 @@
 
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import { signIn } from "next-auth/react";
+import { AiFillGoogleCircle, AiFillApple } from "react-icons/ai";
+import { RiFacebookCircleFill } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
 	const [userId, setUserId] = useState("");
 	const [password, setPassword] = useState("");
 	const [role, setRole] = useState("USER");
+	const router = useRouter();
 
-	function handleSubmit(e: FormEvent) {
+	async function handleSubmit(e: FormEvent) {
 		e.preventDefault();
 
 		console.log({ userId, password, role });
+
+		try {
+			const user = await signIn("credentials", {
+				redirect: false,
+				userId,
+				password,
+			});
+
+			console.log(user);
+			router.push('/')
+		} catch (err) {
+			console.error(err);
+		}
 	}
 	return (
 		<main className="flex flex-col items-center justify-center gap-5 rounded-2xl  bg-purple-600 p-9">
@@ -72,12 +90,61 @@ export default function Login() {
 			</form>
 
 			{role === "USER" && (
-				<div className="text-center">
-					<p className="text-orange-400">Need an account?</p>
-					<Link href={"/auth/signup"} className="italic underline">
-						Click here to signup
-					</Link>
-				</div>
+				<>
+					<div className="flex items-center gap-2 self-center">
+						<div className="h-0.5 w-36 bg-purple-100"></div>
+						<span className="text-md italic">or</span>
+						<div className="h-0.5 w-36 bg-purple-100"></div>
+					</div>
+
+					<div className="flex flex-col items-center justify-center gap-5">
+						<button
+							onClick={() =>
+								signIn("google", {
+									redirect: true,
+									callbackUrl: "/",
+								})
+							}
+							className="flex items-center gap-3 self-center"
+						>
+							<AiFillGoogleCircle size={20} />
+							<span>Signup with google</span>
+						</button>
+						<button
+							onClick={() =>
+								signIn("facebook", {
+									redirect: true,
+									callbackUrl: "/",
+								})
+							}
+							className="flex items-center gap-3 self-center"
+						>
+							<RiFacebookCircleFill size={20} />
+							<span>Signup with facebook</span>
+						</button>
+						<button
+							onClick={() =>
+								signIn("apple", {
+									redirect: true,
+									callbackUrl: "/",
+								})
+							}
+							className="flex items-center gap-3 self-center"
+						>
+							<AiFillApple size={20} />
+							<span>Signup with apple</span>
+						</button>
+					</div>
+					<div className="text-center">
+						<p className="text-orange-400">Need an account?</p>
+						<Link
+							href={"/auth/signup"}
+							className="italic underline"
+						>
+							Click here to signup
+						</Link>
+					</div>
+				</>
 			)}
 		</main>
 	);
