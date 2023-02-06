@@ -1,12 +1,9 @@
 "use client";
 
 import axios from "axios";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { AiFillApple, AiFillGoogleCircle } from "react-icons/ai";
-import { RiFacebookCircleFill } from "react-icons/ri";
 
 export default function SignUp() {
 	const [name, setName] = useState("");
@@ -37,7 +34,7 @@ export default function SignUp() {
 	}
 
 	return (
-		<main className="flex flex-col items-center justify-center gap-5 rounded-2xl  bg-purple-600 p-7">
+		<main className="flex h-full w-full flex-col items-center justify-center gap-5 rounded-md bg-purple-600 p-8 ">
 			<h1 className="text-xl">SignUp</h1>
 
 			<form className="flex flex-col gap-5" onSubmit={handleSubmit}>

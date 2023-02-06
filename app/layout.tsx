@@ -11,8 +11,8 @@ export default function RootLayout({
 		<html lang="en">
 			<head />
 			<SessionProvider>
-				<body className="h-screen">
-					<div className="flex h-full items-center justify-center">
+				<body className="flex items-center justify-center">
+					<div className="flex h-[740px] w-[360px] border-2 bg-neutral-800 items-center  justify-center rounded-xl ">
 						{children}
 					</div>
 				</body>

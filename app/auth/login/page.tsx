@@ -26,13 +26,13 @@ export default function Login() {
 			});
 
 			console.log(user);
-			router.push('/')
+			router.push("/");
 		} catch (err) {
 			console.error(err);
 		}
 	}
 	return (
-		<main className="flex flex-col items-center justify-center gap-5 rounded-2xl  bg-purple-600 p-9">
+		<main className="flex h-full w-full flex-col items-center rounded-md p-8 justify-center gap-5 bg-purple-600 ">
 			<h1 className="text-xl">Login</h1>
 
 			<div className="flex gap-6">
