@@ -44,7 +44,6 @@ export default function Home() {
 						</div>
 
 						<div className="-translate-y-14 pt-14 px-3 self-center  bg-yellow-600 w-full pb-2 text-center rounded-xl">
-
 							<QRCode
 								className="p-2 bg-purple-50 rounded-lg flex self-center m-0"
 								value={data.user.referalCode}
