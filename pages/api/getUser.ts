@@ -6,7 +6,10 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	const session = await getServerSession(req, res, authOptions);
+	const session = await getServerSession(req, res, {
+		...authOptions,
+		session: { strategy: "jwt" },
+	});
 
 	if (!session) {
 		return res.status(401).json({ message: "User must be login" });
