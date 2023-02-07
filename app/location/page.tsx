@@ -9,7 +9,7 @@ import {
 } from "@reach/combobox";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useGeolocated } from "react-geolocated";
 
@@ -21,7 +21,7 @@ import usePlacesAutocomplete, {
 export default function Location() {
 	const [location, setLocation] = useState({ lat: 44, lng: -800 });
 
-	const router = useRouter();
+	// const router = useRouter();
 
 	const { coords, isGeolocationEnabled } = useGeolocated({
 		positionOptions: {
@@ -78,9 +78,9 @@ export default function Location() {
 	);
 }
 
-function Map({ location: loc }) {
+function Map({ location: loc }: { location: any }) {
 	const center = useMemo(() => loc, [loc]);
-	const [selected, setSelected] = useState(null);
+	const [selected, setSelected] = useState();
 	return (
 		<div className="w-full h-[550px] flex flex-col gap-3">
 			<div className="m-4">
@@ -97,7 +97,7 @@ function Map({ location: loc }) {
 	);
 }
 
-function PlacesAutoComplete({ setSelected }) {
+function PlacesAutoComplete({ setSelected }: { setSelected: any }) {
 	const {
 		ready,
 		value,
@@ -106,7 +106,7 @@ function PlacesAutoComplete({ setSelected }) {
 		clearSuggestions,
 	} = usePlacesAutocomplete();
 
-	const handleSelect = async address => {
+	const handleSelect = async (address: any) => {
 		setValue(address, false);
 		clearSuggestions();
 
