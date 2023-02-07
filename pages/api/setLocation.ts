@@ -8,7 +8,10 @@ export default async function handler(
 	res: NextApiResponse
 ) {
 	if (req.method === "POST") {
-		const session = await getServerSession(req, res, authOptions);
+		const session = await getServerSession(req, res, {
+			...authOptions,
+			session: { strategy: "jwt" },
+		});
 
 		if (!session) {
 			res.status(401).json({ message: "You must be logged in." });
@@ -16,7 +19,7 @@ export default async function handler(
 
 		console.log(req.body);
 
-		const user = await prisma.user.update({
+		await prisma.user.update({
 			where: { email: session?.user?.email! },
 			data: {
 				location: req.body.location,
