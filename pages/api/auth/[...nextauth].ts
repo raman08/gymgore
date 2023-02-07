@@ -20,6 +20,10 @@ export const authOptions = {
 				password: { label: "password", type: "password" },
 			},
 			async authorize(credentials) {
+				if (!credentials?.userId || !credentials.password) {
+					throw new Error("Invalid Email or Password");
+				}
+
 				const { userId, password } = credentials;
 
 				console.log({ userId, password });
