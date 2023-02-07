@@ -7,9 +7,10 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prismadb";
 import bcrypt from "bcrypt";
 
-export default NextAuth({
+export const authOptions = {
 	session: {
 		strategy: "jwt",
+		// strategy: "database",
 	},
 	adapter: PrismaAdapter(prisma),
 	providers: [
@@ -79,4 +80,6 @@ export default NextAuth({
 	// 		return session;
 	// 	},
 	// },
-});
+};
+
+export default NextAuth(authOptions);

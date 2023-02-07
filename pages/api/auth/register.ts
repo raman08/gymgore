@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prismadb";
 import bcrypt from "bcrypt";
+import random from "alphanumeric";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -30,12 +31,27 @@ export default async function handler(
 				return res.status(402).json({ message: "Email already exist" });
 			}
 
+			let referalCode = random(6);
+
+			let referalUser = await prisma.user.findUnique({
+				where: { referalCode },
+			});
+
+			while (referalUser) {
+				console.log(referalCode, referalUser);
+				referalCode = random(6);
+				referalUser = await prisma.user.findUnique({
+					where: { referalCode },
+				});
+			}
+
 			const user = await prisma.user.create({
 				data: {
 					name,
 					email,
 					userId,
 					password: hashPassword,
+					referalCode: referalCode,
 				},
 			});
 

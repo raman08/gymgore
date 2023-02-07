@@ -8,6 +8,8 @@ import {
 	ComboboxPopover,
 } from "@reach/combobox";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useGeolocated } from "react-geolocated";
 
@@ -19,15 +21,29 @@ import usePlacesAutocomplete, {
 export default function Location() {
 	const [location, setLocation] = useState({ lat: 44, lng: -800 });
 
-	const { coords, isGeolocationEnabled, isGeolocationAvailable } =
-		useGeolocated({
-			positionOptions: {
-				enableHighAccuracy: true,
-			},
-			userDecisionTimeout: 5000,
+	const router = useRouter();
+
+	const { coords, isGeolocationEnabled } = useGeolocated({
+		positionOptions: {
+			enableHighAccuracy: true,
+		},
+		userDecisionTimeout: 5000,
+	});
+
+	const handleConfirmLocation = async () => {
+		const data = await axios.post("/api/setLocation", {
+			location: JSON.stringify(location),
 		});
 
-	const handleConfirmLocation = () => {};
+		console.log(data);
+
+		// if (data.status === 200) {
+		// router.push("/dashboard", {
+		// 	forceOptimisticNavigation: true,
+		// });
+		window.location.href = "/dashboard";
+		// }
+	};
 
 	useEffect(() => {
 		setLocation({

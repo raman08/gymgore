@@ -49,6 +49,7 @@ model User {
     userId        String?   @unique
     role          String?   @default("USER")
     location      String?
+    referalCode   String?   @unique
 }
 
 model VerificationToken {
