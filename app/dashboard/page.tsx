@@ -8,7 +8,7 @@ import QRCode from "react-qr-code";
 import { QrReader } from "react-qr-reader";
 import useSWR from "swr";
 
-const fetcher = url => axios.get(url).then(res => res.data);
+const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
 export default function Home() {
 	const { data, error, isLoading } = useSWR("/api/getUser", fetcher);
@@ -29,6 +29,15 @@ export default function Home() {
 		return <p>Something Went Wrong</p>;
 	}
 
+	if (!data.user) {
+		return (
+			<div>
+				<p>No user found</p>
+				<div>{JSON.stringify(data.user)}</div>
+			</div>
+		);
+	}
+
 	return (
 		<main className="w-full h-full flex flex-col items-center justify-center px-8">
 			{data.user.role === "USER" ? (
@@ -46,7 +55,7 @@ export default function Home() {
 						<div className="-translate-y-14 pt-14 px-3 self-center  bg-yellow-600 w-full pb-2 text-center rounded-xl">
 							<QRCode
 								className="p-2 bg-purple-50 rounded-lg flex self-center m-0"
-								value={data.user.referalCode}
+								value={data.user.referalCode ?? "c664aE"}
 								style={{ width: "100%" }}
 							/>
 
@@ -55,7 +64,7 @@ export default function Home() {
 									User Code
 								</span>
 								<span className="p-1 bg-white text-lg text-purple-400 rounded-md">
-									{data.user.referalCode}
+									{data.user.referalCode ?? "c664aE"}
 								</span>
 							</div>
 						</div>

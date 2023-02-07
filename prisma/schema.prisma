@@ -6,7 +6,8 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
+    // provider = "sqlite"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
@@ -16,12 +17,12 @@ model Account {
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? //@db.Text
-    access_token      String? //@db.Text
+    refresh_token     String? @db.Text
+    access_token      String? @db.Text
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? //@db.Text
+    id_token          String? @db.Text
     session_state     String?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -42,13 +43,13 @@ model User {
     name          String?
     email         String?   @unique
     emailVerified DateTime?
-    image         String?
+    image         String?   @default("https://randomuser.me/api/portraits/med/men/85.jpg")
     accounts      Account[]
     sessions      Session[]
     password      String?
     userId        String?   @unique
     role          String?   @default("USER")
-    location      String?
+    location      String?   @db.Text
     referalCode   String?   @unique
 }
 

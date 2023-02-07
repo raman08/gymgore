@@ -15,6 +15,12 @@ export default function Home() {
 						{data?.user ? ` ${data?.user?.name}` : " no one"}
 						<br />
 					</h1>
+					<Link
+						className="rounded-2xl border-2 p-3"
+						href={"/location"}
+					>
+						Go to Location
+					</Link>
 					<button
 						className="rounded-2xl border-2 p-3"
 						onClick={() => signOut()}
