@@ -82,7 +82,7 @@ function Map({ location: loc }) {
 	const center = useMemo(() => loc, [loc]);
 	const [selected, setSelected] = useState(null);
 	return (
-		<div className="w-full h-[550px] overflow-clip flex flex-col gap-3">
+		<div className="w-full h-[550px] flex flex-col gap-3">
 			<div className="m-4">
 				<PlacesAutoComplete setSelected={setSelected} />
 			</div>
