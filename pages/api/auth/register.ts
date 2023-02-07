@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prismadb";
 import bcrypt from "bcrypt";
+// @ts-ignore
 import random from "alphanumeric";
 
 export default async function handler(
